@@ -5,15 +5,12 @@ GROUP BY season
 ORDER BY season;
 ```
 ## 2. Number of matches won per team per year in IPL.
-
-
-
-
-
-
-
-
-
+```
+SELECT winner, COUNT(winner)
+FROM matches
+GROUP BY winner
+ORDER BY COUNT(winner) DESC;
+```
 ## 3. Extra runs conceded per team in the year 2016
 ```
 SELECT bowling_team, sum(extra_runs) FROM deliveries
