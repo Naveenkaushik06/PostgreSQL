@@ -1,0 +1,5 @@
+# Joins
+The PostgreSQL Joins clause is used to combine records from two or more tables in a database. A JOIN is a means for combining fields from two tables by using values common to each.
+
+Join Types in PostgreSQL are:
+
