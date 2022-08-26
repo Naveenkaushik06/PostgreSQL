@@ -20,11 +20,17 @@ WHERE matches.season=2016
 GROUP BY bowling_team;
 ```
 ## 4. Top 10 economical bowlers in the year 2015
-```SQL
+```sql
 SELECT bowler,round(SUM(total_runs)/((COUNT(bowler))/6.0),2)
 AS economy FROM deliveries
 WHERE match_id IN (SELECT id FROM matches WHERE season=2015)
 GROUP BY bowler
 ORDER BY economy
 LIMIT 10;
+```
+## 5. Find the number of times each team won the toss and also won the match
+```sql
+SELECT winner, COUNT (winner) FROM matches
+WHERE winner=toss_winner
+GROUP BY winner;
 ```
