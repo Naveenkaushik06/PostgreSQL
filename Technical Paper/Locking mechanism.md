@@ -1,8 +1,8 @@
-#
+# Locking mechanism
 Locks or Exclusive Locks or Write Locks prevent users from modifying a row or an entire table. Rows modified by UPDATE and DELETE are then exclusively locked automatically for the duration of the transaction. This prevents other users from changing the row until the transaction is either committed or rolled back.
 ## Syntax for LOCK command
 The basic syntax for LOCK command is as follows −
-```
+```sql
 LOCK [ TABLE ]
 name
  IN

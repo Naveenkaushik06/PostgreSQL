@@ -27,7 +27,7 @@ Transactional control commands are only used with the DML commands INSERT, UPDAT
 Transactions can be started using BEGIN TRANSACTION or simply BEGIN command. Such transactions usually persist until the next COMMIT or ROLLBACK command is encountered. But a transaction will also ROLLBACK if the database is closed or if an error occurs.
 
 The following is the simple syntax to start a transaction −
-```
+```sql
 BEGIN;
 
 or
@@ -40,7 +40,7 @@ The COMMIT command is the transactional command used to save changes invoked by 
 The COMMIT command saves all transactions to the database since the last COMMIT or ROLLBACK command.
 
 The syntax for COMMIT command is as follows −
-```
+```sql
 COMMIT;
 
 or
@@ -54,6 +54,6 @@ The ROLLBACK command is the transactional command used to undo transactions that
 The ROLLBACK command can only be used to undo transactions since the last COMMIT or ROLLBACK command was issued.
 
 The syntax for ROLLBACK command is as follows −
-```
+```sql
 ROLLBACK;
 ```

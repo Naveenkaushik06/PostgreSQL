@@ -1,32 +1,32 @@
 # Indexes
 ## The CREATE INDEX Command
 The basic syntax of CREATE INDEX is as follows −
-```
+```sql
 CREATE INDEX index_name ON table_name;
 ```
 ## Index Types
 PostgreSQL provides several index types: B-tree, Hash, GiST, SP-GiST and GIN. Each Index type uses a different algorithm that is best suited to different types of queries. By default, the CREATE INDEX command creates B-tree indexes, which fit the most common situations.
 ## Single-Column Indexes
 A single-column index is one that is created based on only one table column. The basic syntax is as follows −
-```
+```sql
 CREATE INDEX index_name
 ON table_name (column_name);
 ```
 ## Multicolumn Indexes
 A multicolumn index is defined on more than one column of a table. The basic syntax is as follows −
-```
+```sql
 CREATE INDEX index_name
 ON table_name (column1_name, column2_name);
 ```
 ## Unique Indexes
 Unique indexes are used not only for performance, but also for data integrity. A unique index does not allow any duplicate values to be inserted into the table. The basic syntax is as follows −
-```
+```sql
 CREATE UNIQUE INDEX index_name
 on table_name (column_name);
 ```
 ## Partial Indexes
 A partial index is an index built over a subset of a table; the subset is defined by a conditional expression (called the predicate of the partial index). The index contains entries only for those table rows that satisfy the predicate. The basic syntax is as follows −
-```
+```sql
 CREATE INDEX index_name
 on table_name (conditional_expression);
 ```
@@ -37,11 +37,11 @@ Implicit indexes are indexes that are automatically created by the database serv
 An index can be dropped using PostgreSQL DROP command. Care should be taken when dropping an index because performance may be slowed or improved.
 
 The basic syntax is as follows −
-```
+```sql
 DROP INDEX index_name;
 ```
 You can use following statement to delete previously created index −
-```
+```sql
 # DROP INDEX salary_index;
 ```
 ## When Should Indexes be Avoided?
@@ -68,7 +68,7 @@ At a high-level, the B-tree has Root, Intermediate and Leaf node.
 Hash indexes are best suited to work with equality operators. The equality operator looks for the exact match of data. Starting from Postgres 9.x version, the hash indexes are WAL-logged and crash-safe.
 
 In the following CREATE INDEX statement, we create a hash index on the “City” column ( Using HASH(“City”).
-```
+```sql
 CREATE INDEX IX_Addresses_city on addresses using HASH("city");
 ```
 
@@ -91,7 +91,7 @@ The BRIN index is also known as Block Range Index. It stores the summary of bloc
 
 ## List indexes in Postgres
 Suppose you require a list of indexes for all objects in a specific schema or a particular table. For this purpose, we can use the pg_indexes view. It returns the index definition as well the index. In the below query, it returns index information for all tables in the public schema.
-```
+```sql
 SELECT
 tablename as "TableName",
 indexname as "Index Name",
