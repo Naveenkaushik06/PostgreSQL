@@ -20,4 +20,11 @@ WHERE matches.season=2016
 GROUP BY bowling_team;
 ```
 ## 4. Top 10 economical bowlers in the year 2015
-
+```SQL
+SELECT bowler,round(SUM(total_runs)/((COUNT(bowler))/6.0),2)
+AS economy FROM deliveries
+WHERE match_id IN (SELECT id FROM matches WHERE season=2015)
+GROUP BY bowler
+ORDER BY economy
+LIMIT 10;
+```
