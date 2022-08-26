@@ -34,3 +34,10 @@ SELECT winner, COUNT (winner) FROM matches
 WHERE winner=toss_winner
 GROUP BY winner;
 ```
+## 6. Find a player who has won the highest number of Player of the Match awards for each season
+```sql
+
+
+
+```
+## 7. Find the strike rate of a batsman for each season
