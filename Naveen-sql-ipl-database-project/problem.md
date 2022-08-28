@@ -41,3 +41,28 @@ GROUP BY winner;
 
 ```
 ## 7. Find the strike rate of a batsman for each season
+```sql
+
+
+
+
+```
+
+## 8. Find the highest number of times one player has been dismissed by another player
+```sql
+
+
+
+
+
+
+
+```
+## 9. Find the bowler with the best economy in super overs
+```sql
+
+
+
+
+
+```
