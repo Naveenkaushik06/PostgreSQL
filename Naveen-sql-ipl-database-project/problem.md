@@ -42,10 +42,12 @@ GROUP BY winner;
 ```
 ## 7. Find the strike rate of a batsman for each season
 ```sql
-
-
-
-
+SELECT delivery.batsman, match.season,
+ROUND (((SUM (delivery.batsman_runs)*1.00)/COUNT(delivery.batsman))*100,2) AS strike_rate
+FROM deliveries AS delivery inner join matches AS match
+ON delivery.match_id = match.id
+group by delivery.batsman, match.season
+order by delivery.batsman, match.season;
 ```
 ## 8. Find the highest number of times one player has been dismissed by another player
 ```sql
