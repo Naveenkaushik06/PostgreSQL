@@ -47,22 +47,20 @@ GROUP BY winner;
 
 
 ```
-
 ## 8. Find the highest number of times one player has been dismissed by another player
 ```sql
-
-
-
-
-
-
-
+SELECT player_dismissed, bowler, 
+COUNT (player_dismissed) AS no_of_times_dismissed
+FROM deliveries
+GROUP BY player_dismissed, bowler
+ORDER BY no_of_times_dismissed DESC
+LIMIT 1;
 ```
 ## 9. Find the bowler with the best economy in super overs
 ```sql
-
-
-
-
-
+SELECT bowler, ROUND (sum(total_runs)/((COUNT(bowler)/6.0)), 2) As economy FROM deliveries
+WHERE match_id in (SELECT id FROM matches WHERE over= is_super_over) 
+GROUP by bowler                                                      
+ORDER by economy 
+LIMIT 1;
 ```
