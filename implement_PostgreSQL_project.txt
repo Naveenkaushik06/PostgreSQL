@@ -1,0 +1,162 @@
+naveen@naveen-Lenovo-IdeaPad-S340-15IWL:~$ sudo -u postgres psql
+[sudo] password for naveen: 
+could not change directory to "/home/naveen": Permission denied
+psql (14.5 (Ubuntu 14.5-1.pgdg22.04+1))
+Type "help" for help.
+
+postgres=# \c ipl
+You are now connected to database "ipl" as user "postgres".
+ipl=# \dt
+           List of relations
+ Schema |    Name    | Type  |  Owner   
+--------+------------+-------+----------
+ public | deliveries | table | postgres
+ public | matches    | table | postgres
+(2 rows)
+
+ipl=# \l
+                             List of databases
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   
+-----------+----------+----------+---------+-------+-----------------------
+ ipl       | postgres | UTF8     | en_IN   | en_IN | 
+ postgres  | postgres | UTF8     | en_IN   | en_IN | 
+ template0 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_IN   | en_IN | =c/postgres          +
+           |          |          |         |       | postgres=CTc/postgres
+(4 rows)
+
+ipl=# SELECT season, count(*) FROM matches
+GROUP BY season
+ORDER BY season;
+ season | count 
+--------+-------
+   2008 |    58
+   2009 |    57
+   2010 |    60
+   2011 |    73
+   2012 |    74
+   2013 |    76
+   2014 |    60
+   2015 |    59
+   2016 |    60
+   2017 |    59
+(10 rows)
+
+ipl=# SELECT winner, COUNT(winner)
+FROM matches
+GROUP BY winner
+ORDER BY COUNT(winner) DESC;
+           winner            | count 
+-----------------------------+-------
+ Mumbai Indians              |    92
+ Chennai Super Kings         |    79
+ Kolkata Knight Riders       |    77
+ Royal Challengers Bangalore |    73
+ Kings XI Punjab             |    70
+ Rajasthan Royals            |    63
+ Delhi Daredevils            |    62
+ Sunrisers Hyderabad         |    42
+ Deccan Chargers             |    29
+ Gujarat Lions               |    13
+ Pune Warriors               |    12
+ Rising Pune Supergiant      |    10
+ Kochi Tuskers Kerala        |     6
+ Rising Pune Supergiants     |     5
+                             |     0
+(15 rows)
+
+ipl=# SELECT bowling_team, sum(extra_runs) FROM deliveries
+INNER JOIN matches
+ON matches.id=deliveries.match_id
+WHERE matches.season=2016
+GROUP BY bowling_team;
+        bowling_team         | sum 
+-----------------------------+-----
+ Kolkata Knight Riders       | 122
+ Rising Pune Supergiants     | 108
+ Mumbai Indians              | 102
+ Delhi Daredevils            | 106
+ Kings XI Punjab             | 100
+ Royal Challengers Bangalore | 156
+ Gujarat Lions               |  98
+ Sunrisers Hyderabad         | 107
+(8 rows)
+
+ipl=# SELECT bowler,round(SUM(total_runs)/((COUNT(bowler))/6.0),2)
+AS economy FROM deliveries
+WHERE match_id IN (SELECT id FROM matches WHERE season=2015)
+GROUP BY bowler
+ORDER BY economy
+LIMIT 10;
+      bowler      | economy 
+------------------+---------
+ RN ten Doeschate |    3.43
+ J Yadav          |    4.14
+ V Kohli          |    5.45
+ R Ashwin         |    5.73
+ S Nadeem         |    5.86
+ Z Khan           |    6.15
+ Parvez Rasool    |    6.20
+ MC Henriques     |    6.27
+ MA Starc         |    6.75
+ M de Lange       |    6.92
+(10 rows)
+
+ipl=# SELECT winner, COUNT (winner) FROM matches
+WHERE winner=toss_winner
+GROUP BY winner;
+           winner            | count 
+-----------------------------+-------
+ Chennai Super Kings         |    42
+ Deccan Chargers             |    19
+ Delhi Daredevils            |    33
+ Gujarat Lions               |    10
+ Kings XI Punjab             |    28
+ Kochi Tuskers Kerala        |     4
+ Kolkata Knight Riders       |    44
+ Mumbai Indians              |    48
+ Pune Warriors               |     3
+ Rajasthan Royals            |    34
+ Rising Pune Supergiant      |     5
+ Rising Pune Supergiants     |     3
+ Royal Challengers Bangalore |    35
+ Sunrisers Hyderabad         |    17
+(14 rows)
+
+ipl=# SELECT delivery.batsman, match.season,
+ROUND (((SUM (delivery.batsman_runs)*1.00)/COUNT(delivery.batsman))*100,2) AS strike_rate
+FROM deliveries AS delivery INNER JOIN matches AS match
+ON delivery.match_id = match.id
+GROUP BY delivery.batsman, match.season
+ORDER BY delivery.batsman, match.season;
+ipl=# 
+ipl=# 
+ipl=# 
+ipl=# SELECT player_dismissed, bowler, 
+COUNT (player_dismissed) AS no_of_times_dismissed
+FROM deliveries
+GROUP BY player_dismissed, bowler
+ORDER BY no_of_times_dismissed DESC
+LIMIT 1;
+ player_dismissed | bowler | no_of_times_dismissed 
+------------------+--------+-----------------------
+ MS Dhoni         | Z Khan |                     7
+(1 row)
+
+ipl=# SELECT bowler, ROUND (sum(total_runs)/((COUNT(bowler)/6.0)), 2) As economy FROM deliveries
+WHERE match_id in (SELECT id FROM matches WHERE over= is_super_over) 
+GROUP by bowler                                                      
+ORDER by economy 
+LIMIT 1;
+  bowler   | economy 
+-----------+---------
+ JJ Bumrah |    4.50
+(1 row)
+
+ipl=# SELECT delivery.batsman, match.season,
+ROUND (((SUM (delivery.batsman_runs)*1.00)/COUNT(delivery.batsman))*100,2) AS strike_rate
+FROM deliveries AS delivery INNER JOIN matches AS match
+ON delivery.match_id = match.id
+GROUP BY delivery.batsman, match.season
+ORDER BY delivery.batsman, match.season;
